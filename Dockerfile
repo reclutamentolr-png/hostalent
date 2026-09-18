@@ -19,6 +19,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Abilita mod_rewrite di Apache (necessario per Laravel)
 RUN a2enmod rewrite
 
+#  FIX 403 FORBIDDEN: Imposta la cartella 'public' di Laravel come root di Apache
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+
 # Imposta la directory di lavoro
 WORKDIR /var/www/html
 
